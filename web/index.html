@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>News aggregator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="http://wenzhixin.net.cn/p/bootstrap-table/src/bootstrap-table.css" rel="stylesheet" type="text/css" />
+
+    <link href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css" rel="stylesheet" />
+    <link href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.bootstrap.min.css" rel="stylesheet" />
+    <link href="http://protostrap.com/Assets/gv/css/gv.bootstrap-form.css" rel="stylesheet" type="text/css" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Fav and touch icons -->
+    <script type="text/javascript" src="http://127.0.0.1:8080/scripts.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="form-group brdbot">
+                    <h3>News aggregator</h3>
+                    <div class="controls col-sm-9">
+
+                        <p id="field1" data-default-label="Header" data-default-is-header="true"
+                            data-control-type="header"></p><span id="errId1" class="error"></span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <input id="FeedSourceBox" type="text" class="form-control k-textbox" data-role="text" placeholder="url">
+                    <input id="RuleBox" type="text" class="form-control k-textbox" data-role="text" placeholder="rule">
+                </div>
+                <div class="col-md-2">
+                    <button id="AddFeedSourceBtn" type="button" class="btn btn-primary">Add</button>
+                </div>
+                <div class="col-md-6">
+                        <div class="row">Examples:</div>
+                    <div class="row">
+                    <div id="FirstExample" class="btn-link">
+                        <span style="margin-right: 10px">URL: https://www.netroby.com/rss</span><span>RULE: Title:NewTitle</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="SecondExample" class="btn-link">
+                    <span style="margin-right: 10px">URL: http://feeds.nytimes.com/nyt/rss/Technology</span><span>RULE: Title=title_field,Description=Body</span>
+                </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px">
+                    <div class="col-md-4">
+                        <input id="SearchBox" type="text" class="form-control k-textbox" data-role="text"
+                            placeholder="search news by title">
+                    </div>
+                    <div class="col-md-1">
+                        <button id="SearchBtn" type="button" class="btn btn-info btn-default">Search</button>
+                    </div>
+                    <div class="col-md-6">
+                            <div class="row">
+                                    <span >Rule pattern is 'name_of_field_to_extract=new_field_name'. Pairs separator - ','.</span>
+                                    <span >If field's name dont change, 'new_field_name' may be omitted.</span>
+                                </div>
+                            
+                                    <div class="row">
+                                    <span>WARNING: field names are case-sensitive.</span>
+                                </div>
+                                    <div class="row">
+                                    <span >Rule example: 'Title,Description:Body,Published:Added'</span>
+                                </div>
+                    </div>
+                </div>
+            <div id="NewsDetailRow" class="row">
+                <div class="col-md-6">
+                    <span id="NewsDetailSpan"></span>
+                    <textarea id="NewsDetailTArea" rows="3" class="form-control k-textbox" data-role="textarea"></textarea>
+                </div>
+                <div class="col-md-2">
+                    <button id="NewsDetailCloseBtn" type="button" class="btn btn-danger">Close</button>
+                </div>
+            </div>
+            <div id="NewsListRow" class="row">
+                <div class="col-md-12">
+                    <div id="NewsList"></div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px">
+                <div class="col-md-12">
+                    <div id="NewsList"></div>
+                    <button id="PrevPageBtn">Previous</button>
+                    <button id="NextPageBtn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
