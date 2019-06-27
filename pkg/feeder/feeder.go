@@ -92,33 +92,43 @@ func (f *Feeder) readFeed(s *FeedSource) {
 	feed, _ := fp.ParseURL(s.URL)
 
 	for _, item := range feed.Items {
-		payload, err := json.Marshal(item)
+		payloadToSave, err := parseFeedItem(item, s.Rule)
 
-		if err != nil {
-			fmt.Printf("Error while feed reading: %s\n", err)
-		}
-
-		var fields map[string]*json.RawMessage
-		if err := json.Unmarshal(payload, &fields); err != nil {
-			fmt.Printf("Error while feed reading: %s\n", err)
-		}
-
-		mapToSave := make(map[string]interface{})
-
-		for k, newK := range s.Rule {
-			if val, exist := fields[strings.ToLower(k)]; exist && val != nil {
-				mapToSave[newK] = val
-			}
-		}
-
-		payloadToSave, err := json.Marshal(mapToSave)
 		if err != nil {
 			fmt.Printf("Error while feed reading: %s\n", err)
 		}
 
 		if err := f.storage.CreateNews(s.ID, item.Title, payloadToSave); err != nil &&
 			!strings.HasPrefix(err.Error(), "UNIQUE") {
-			fmt.Printf("Error while feed reading: %s\n", err)
+			fmt.Printf("Error while create news: %s\n", err)
 		}
 	}
+}
+
+func parseFeedItem(item *gofeed.Item, rules map[string]string) ([]byte, error) {
+	payload, err := json.Marshal(item)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var fields map[string]*json.RawMessage
+	if err := json.Unmarshal(payload, &fields); err != nil {
+		return nil, err
+	}
+
+	objFields := make(map[string]interface{})
+
+	for k, newK := range rules {
+		if val, exist := fields[strings.ToLower(k)]; exist && val != nil {
+			objFields[newK] = val
+		}
+	}
+
+	resultPayload, err := json.Marshal(objFields)
+	if err != nil {
+		return nil, err
+	}
+
+	return resultPayload, nil
 }
